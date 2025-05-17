@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+   <title>Churn Prediction</title>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <form action="http://localhost:5000/" method="POST" class="col-sm-9">
+        {% set labels = [
+          'SeniorCitizen', 'MonthlyCharges', 'TotalCharges', 'gender', 'Partner', 'Dependents',
+          'PhoneService', 'MultipleLines', 'InternetService', 'OnlineSecurity', 'OnlineBackup',
+          'DeviceProtection', 'TechSupport', 'StreamingTV', 'StreamingMovies', 'Contract',
+          'PaperlessBilling', 'PaymentMethod', 'tenure'
+        ] %}
+        {% for i in range(1, 20) %}
+        <div class="form-group purple-border">
+          <label for="query{{i}}">{{ labels[i-1] }}:</label>
+          <textarea class="form-control" id="query{{i}}" name="query{{i}}" rows="2" cols="5"
+            {% if i == 1 %}autofocus{% endif %}>{{ queries['query' + i|string] if queries and ('query' + i|string) in queries else '' }}</textarea>
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary" name="submit">SUBMIT</button>
+      </form>
+    </div>
+    <div class="row mt-3">
+      <div class="col-sm-9">
+        <textarea class="form-control mb-2" id="output1" rows="2" readonly>{{ output1 }}</textarea>
+        <textarea class="form-control" id="output2" rows="2" readonly>{{ output2 }}</textarea>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
